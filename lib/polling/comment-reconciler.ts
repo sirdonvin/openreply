@@ -194,6 +194,18 @@ async function sweepCampaign(
     let comments: InstagramComment[];
     try {
       comments = await getRecentMediaComments(accessToken, mediaId, sinceMs);
+
+      console.log(
+        "[Comment Poll] COMMENTS FOUND:",
+        mediaId,
+        comments.map((c) => ({
+          id: c.id,
+          text: c.text,
+          author: c.from?.username,
+          authorId: c.from?.id,
+          timestamp: c.timestamp,
+        }))
+      );
     } catch (error) {
       stat.errors.push(`Comments ${mediaId}: ${errMessage(error)}`);
       continue;
