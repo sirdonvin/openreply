@@ -465,10 +465,22 @@ export async function getRecentMediaComments(
 
   while (nextUrl !== null && results.length < max) {
     const response: Response = await fetch(nextUrl);
-    const page = await handleResponse<{
+
+    const rawBody = await response.text();
+
+    console.log("[Meta Comments] HTTP STATUS:", response.status);
+    console.log("[Meta Comments] RESPONSE:", rawBody.slice(0, 5000));
+
+    if (!response.ok) {
+      throw new Error(
+        `Instagram comments request failed (${response.status}): ${rawBody}`
+      );
+    }
+
+    const page = JSON.parse(rawBody) as {
       data: InstagramComment[];
       paging?: { next?: string };
-    }>(response);
+    };
     const data = page.data ?? [];
     results.push(...data);
 
