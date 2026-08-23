@@ -173,6 +173,14 @@ async function sweepCampaign(
   } else if (automation.matchAnyPost) {
     try {
       const media = await getUserMedia(accessToken, RECENT_MEDIA_LIMIT);
+      console.log(
+        "[Comment Poll] MEDIA FOUND:",
+        media.map((m) => ({
+          id: m.id,
+          timestamp: m.timestamp,
+          caption: m.caption?.slice(0, 80),
+        }))
+      );
       mediaIds.push(...media.map((m) => m.id));
     } catch (error) {
       stat.errors.push(`Media list: ${errMessage(error)}`);
