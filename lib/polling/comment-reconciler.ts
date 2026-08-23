@@ -62,6 +62,7 @@ function errMessage(error: unknown): string {
 
 /** One reconciliation pass across every active campaign. */
 export async function reconcileComments(): Promise<void> {
+  console.log("[Comment Poll] START", new Date().toISOString());
   const automations = await prisma.automation.findMany({
     where: { isActive: true },
     select: {
