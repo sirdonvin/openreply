@@ -86,6 +86,20 @@ export async function reconcileComments(): Promise<void> {
     },
   });
 
+  console.log(
+    "[Comment Poll] ACTIVE AUTOMATIONS:",
+    automations.map((a) => ({
+      id: a.id,
+      name: a.name,
+      postId: a.postId,
+      matchAnyPost: a.matchAnyPost,
+      matchAnyWord: a.matchAnyWord,
+      keywords: a.keywords,
+      instagramId: a.instagramAccount.instagramId,
+      username: a.instagramAccount.username,
+    }))
+  );
+
   const sinceMs = Date.now() - LOOKBACK_HOURS * 60 * 60 * 1000;
   const tokenCache = new Map<string, string | null>();
 
